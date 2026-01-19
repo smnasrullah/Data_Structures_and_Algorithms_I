@@ -1,87 +1,165 @@
+//Singly Linked List
 #include<bits/stdc++.h>
 using namespace std;
 
-class Node{
+//Create a Node
+class Node
+{
 public:
-    int d;
+    int DATA;
     Node* next;
 
-    Node(int v){
-        d=v;
+    Node(int v)
+    {
+        DATA=v;
         next = nullptr;
     }
-
 };
 
-class Linkedlist{
+//Operation on Node in Linked List
+class Linkedlist
+{
 public:
     Node* start;
-    Linkedlist(){
+    Linkedlist()
+    {
         start = nullptr;
     }
 
+    // TRAVERSAL
     void traverse(){
-        Node* p = start;
-        while(p != nullptr){
-            cout<<p->d<<" ";
-            p = p->next;
+        Node* PTR = start;
+        while(PTR != nullptr){
+            cout<<PTR->DATA<<" ";
+            PTR = PTR->next;
         }
         cout<<endl;
     }
 
+    //SEARCHING
+    void searching(int V)
+    {
+        Node* PTR = start;
+        Node* POS = nullptr;
+        int flag = 0;
+        while(PTR != nullptr)
+        {
+            if (PTR->DATA == V)
+            {
+                POS = PTR;
+                flag = 1;
+                break;
+            }
+            else
+                PTR = PTR->next;
+        }
+        if(flag == 1)
+            cout<<"Found"<<endl;
+        else
+            cout<<"Not Found"<<endl;
+    }
+
+
+//INSERTION
+
+    // INSERT AT FIRST
     void insertFirst(int v){
-        Node* newNode = new Node(v);
-        newNode->next = start;
-        start = newNode;
+        Node* NEW = new Node(v);
+        NEW->next = start;
+        start = NEW;
     }
 
+    // INSERT AT LAST
     void insertLast(int v){
-        Node* newNode = new Node(v);
-        Node* p = start;
-        while(p->next != nullptr){
-            p = p->next;
+        Node* NEW = new Node(v);
+        Node* PTR = start;
+        while(PTR->next != nullptr){
+            PTR = PTR->next;
         }
-        p->next = newNode;
+        PTR->next = NEW;
     }
 
+    // INSERT BEFORE A NODE
     void insertBefore(int  v, int k){
-        Node* newNode = new Node(v);
-        Node* p = start;
-        while(p->next->d != k){
-            p = p->next;
+        Node* NEW = new Node(v);
+        Node* PTR = start;
+        while(PTR->next->DATA != k){
+            PTR = PTR->next;
         }
-        newNode->next = p->next;
-        p->next = newNode;
+        NEW->next = PTR->next;
+        PTR->next = NEW;
     }
 
+    //INSER AFTER A NODE
     void insertAfter(int  v, int k){
-        Node* newNode = new Node(v);
-        Node* p = start;
-        while(p->d != k){
-            p = p->next;
+        Node* NEW = new Node(v);
+        Node* PTR = start;
+        while(PTR->DATA != k){
+            PTR = PTR->next;
         }
-        newNode->next = p->next;
-        p->next = newNode;
+        NEW->next = PTR->next;
+        PTR->next = NEW;
     }
 
-    void deleteFirst(){
+// DELETION
+
+    // DELETE FIRST NODE
+    void deleteFirst()
+    {
+        if( start == nullptr)
+            cout<<"No Node";
         start = start->next;
     }
 
+    // DELETE LAST NODE
     void deleteLast(){
-        Node* p = start;
-        while(p->next->next != nullptr){
-            p = p->next;
+        if( start == nullptr)
+            cout<<"No Node";
+        Node* PTR = start;
+        while(PTR->next->next != nullptr){
+            PTR = PTR->next;
         }
-        p->next = nullptr;
+        PTR->next = nullptr;
     }
 
-    void deleteBefore(int k){
-        Node* p = start;
-        while(p->next->next->d!=k){
-            p = p->next;
+    // dELETE AFTER A NODE
+    void deleteAfter(int k){
+        Node* PTR = start;
+        if( PTR == nullptr)
+            cout<<"No Node";
+
+        else
+        {
+            while(PTR->DATA!=k)
+                PTR = PTR->next;
+
+        if(PTR->next == nullptr)
+            cout<<"Not Possible";
+        if(PTR->next->next == nullptr)
+            PTR->next = nullptr;
+        else
+            PTR->next = PTR->next->next;
         }
-        p->next = p->next->next;
+
+    }
+
+    // DELETE BEFORE A NODE
+    void deleteBefore(int k){
+        Node* PTR = start;
+        if( PTR == nullptr)
+            cout<<"No Node";
+
+        if(PTR->DATA == k)
+            {cout<<"Not Possible";}
+        if(PTR->next->DATA == k)
+            start = PTR->next;
+        else
+        {
+           while(PTR->next->next->DATA!=k){
+             PTR = PTR->next;
+        }
+           PTR->next = PTR->next->next;
+        }
     }
 };
 
@@ -106,8 +184,12 @@ int main(){
     lst.traverse();
     lst.deleteLast();
     lst.traverse();
-    lst.deleteBefore(9);
+    lst.deleteBefore(2);
+    lst.traverse();
+    lst.searching(10);
+    lst.deleteAfter(11);
     lst.traverse();
 
     return 0;
 }
+
